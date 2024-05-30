@@ -19,6 +19,16 @@ public class CategoryEntity {
 
     private String descripcion;
 
+    private boolean isActive;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public String getId() {
         return id;
     }

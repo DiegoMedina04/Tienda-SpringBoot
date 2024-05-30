@@ -1,7 +1,8 @@
 package store.demostore.interfaces;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 
 import store.demostore.models.entities.CategoryEntity;
 
@@ -9,11 +10,11 @@ public interface CategoryServiceInterface {
 
     List<CategoryEntity> findAll();
 
-    Optional<CategoryEntity> findById(String id);
+    ResponseEntity<?> findById(String id);
 
-    CategoryEntity save(CategoryEntity category);
+    ResponseEntity<?> save(CategoryEntity category);
 
-    CategoryEntity update(String id, CategoryEntity category);
+    ResponseEntity<?> update(String id, CategoryEntity category);
 
-    void delete(String id);
+    ResponseEntity<?> delete(String id);
 }

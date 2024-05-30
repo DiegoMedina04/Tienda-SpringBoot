@@ -18,9 +18,10 @@ public class EmployeeEntity {
     private String id;
 
     @Column(unique = true)
-    private String codigo;
+    private String code;
 
     private String name;
+
     private String lastName;
 
     private int cellphone;
@@ -43,12 +44,12 @@ public class EmployeeEntity {
         this.id = id;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getcode() {
+        return code;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setcode(String code) {
+        this.code = code;
     }
 
     public String getName() {

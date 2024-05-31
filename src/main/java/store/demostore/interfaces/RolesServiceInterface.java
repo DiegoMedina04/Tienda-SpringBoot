@@ -1,18 +1,19 @@
 package store.demostore.interfaces;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 
 import store.demostore.models.entities.RolesEntity;
 
 public interface RolesServiceInterface {
     List<RolesEntity> findAll();
 
-    Optional<RolesEntity> findById(String id);
+    ResponseEntity<?> findById(String id);
 
-    RolesEntity save(RolesEntity rol);
+    ResponseEntity<?> save(RolesEntity rol);
 
-    RolesEntity update(String id, RolesEntity rol);
+    ResponseEntity<?> update(String id, RolesEntity rol);
 
-    void delete(String id);
+    ResponseEntity<?> delete(String id);
 }

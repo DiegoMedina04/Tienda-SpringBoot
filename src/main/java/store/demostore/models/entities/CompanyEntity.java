@@ -39,6 +39,8 @@ public class CompanyEntity {
     @Column(unique = true)
     private String imageUrl;
 
+    private CategoryEntity categoryId;
+
     private Timestamp createdAt;
 
     private Timestamp updatedAt;
@@ -113,6 +115,14 @@ public class CompanyEntity {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public CategoryEntity getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(CategoryEntity categoryId) {
+        this.categoryId = categoryId;
     }
 
 }

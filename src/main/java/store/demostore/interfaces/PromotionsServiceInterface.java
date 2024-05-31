@@ -3,17 +3,19 @@ package store.demostore.interfaces;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+
 import store.demostore.models.entities.PromotionsEntity;
 
 public interface PromotionsServiceInterface {
     List<PromotionsEntity> findAll();
 
-    Optional<PromotionsEntity> findById(String id);
+    ResponseEntity<?> findById(String id);
 
-    PromotionsEntity save(PromotionsEntity promotion);
+    ResponseEntity<?> save(PromotionsEntity promotion);
 
-    PromotionsEntity update(String id, PromotionsEntity promotion);
+    ResponseEntity<?> update(String id, PromotionsEntity promotion);
 
-    void delete(String id);
+    ResponseEntity<?> delete(String id);
 
 }

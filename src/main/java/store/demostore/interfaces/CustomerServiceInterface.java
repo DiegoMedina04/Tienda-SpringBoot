@@ -1,7 +1,8 @@
 package store.demostore.interfaces;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 
 import store.demostore.models.entities.CustomerEntity;
 
@@ -9,12 +10,12 @@ public interface CustomerServiceInterface {
 
     List<CustomerEntity> findAll();
 
-    Optional<CustomerEntity> findById(String id);
+    ResponseEntity<?> findById(String id);
 
-    CustomerEntity save(CustomerEntity customer);
+    ResponseEntity<?> save(CustomerEntity customer);
 
-    CustomerEntity update(String id, CustomerEntity company);
+    ResponseEntity<?> update(String id, CustomerEntity company);
 
-    void delete(String id);
+    ResponseEntity<?> delete(String id);
 
 }

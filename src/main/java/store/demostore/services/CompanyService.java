@@ -3,10 +3,12 @@ package store.demostore.services;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.CompanyServiceInterface;
 import store.demostore.models.entities.CompanyEntity;
 
+@Service
 public class CompanyService implements CompanyServiceInterface {
 
     @Override

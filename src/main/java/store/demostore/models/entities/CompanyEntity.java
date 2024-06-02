@@ -1,6 +1,7 @@
 
 package store.demostore.models.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -8,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -15,7 +17,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "empresas")
-public class CompanyEntity {
+public class CompanyEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,8 +40,6 @@ public class CompanyEntity {
 
     @Column(unique = true)
     private String imageUrl;
-
-    private CategoryEntity categoryId;
 
     private Timestamp createdAt;
 
@@ -115,14 +115,6 @@ public class CompanyEntity {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public CategoryEntity getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(CategoryEntity categoryId) {
-        this.categoryId = categoryId;
     }
 
 }

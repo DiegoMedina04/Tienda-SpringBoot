@@ -3,10 +3,12 @@ package store.demostore.services;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.RolesServiceInterface;
 import store.demostore.models.entities.RolesEntity;
 
+@Service
 public class RolesService implements RolesServiceInterface {
 
     @Override

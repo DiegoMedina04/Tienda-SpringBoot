@@ -1,5 +1,7 @@
 package store.demostore.models.entities;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+
 @Table(name = "categorias")
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -17,17 +21,9 @@ public class CategoryEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private String descripcion;
+    private String description;
 
-    private boolean isActive;
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+    private Boolean isActive;
 
     public String getId() {
         return id;
@@ -37,20 +33,28 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getdescription() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
 }

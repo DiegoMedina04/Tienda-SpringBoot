@@ -1,13 +1,14 @@
 package store.demostore.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.PromotionsServiceInterface;
 import store.demostore.models.entities.PromotionsEntity;
 
+@Service
 public class PromotionsService implements PromotionsServiceInterface {
 
     @Override

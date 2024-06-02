@@ -1,7 +1,6 @@
 package store.demostore.interfaces;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 

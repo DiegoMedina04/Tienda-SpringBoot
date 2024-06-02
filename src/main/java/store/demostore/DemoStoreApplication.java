@@ -8,6 +8,7 @@ public class DemoStoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoStoreApplication.class, args);
+		System.out.println("Cargado y listo ");
 	}
 
 }

@@ -1,6 +1,7 @@
 package store.demostore.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -17,4 +18,6 @@ public interface CategoryServiceInterface {
     ResponseEntity<?> update(String id, CategoryEntity category);
 
     ResponseEntity<?> delete(String id);
+
+    Optional<CategoryEntity> findCategoryONull (String id);
 }

@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.CategoryServiceInterface;
 import store.demostore.models.entities.CategoryEntity;
 import store.demostore.repositories.CategoryRepository;
 
+@Service
 public class CategoryService implements CategoryServiceInterface {
 
     @Autowired
@@ -32,7 +34,7 @@ public class CategoryService implements CategoryServiceInterface {
 
     @Override
     public ResponseEntity<?> save(CategoryEntity category) {
-        Optional<CategoryEntity> nameCategory = findCategoryName(category.getname());
+        Optional<CategoryEntity> nameCategory = findCategoryName(category.getName());
         if (nameCategory.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria con nombre existente");
         }
@@ -46,21 +48,23 @@ public class CategoryService implements CategoryServiceInterface {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria no encontrada");
         }
 
-        List<CategoryEntity> nameCategory = findCategoryNameDifferentId(category.getname(), category.getId());
-        if (nameCategory.isEmpty()) {
+        List<CategoryEntity> nameCategory = findCategoryNameDifferentId(category.getId(), category.getName());
+
+        if (nameCategory.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nombre para la categoria ya en uso");
         }
 
         CategoryEntity categoryDb = categoryOptional.orElseThrow();
-        categoryDb.setname(category.getname());
-        categoryDb.setDescripcion(category.getdescription());
-        categoryDb.setActive(category.isActive());
+        categoryDb.setName(category.getName());
+        categoryDb.setDescription(category.getDescription());
+        categoryDb.setIsActive(category.getIsActive());
 
         return ResponseEntity.ok(categoryRepository.save(categoryDb));
     }
 
     @Override
     public ResponseEntity<?> delete(String id) {
+        categoryRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Categoria eliminada!");
     }
 
@@ -73,4 +77,8 @@ public class CategoryService implements CategoryServiceInterface {
         return categoryRepository.findByNameAndDifferentId(name, id);
     }
 
+    public Optional<CategoryEntity> findCategoryONull (String id){
+
+        return categoryRepository.findById(id);
+    }
 }

@@ -50,11 +50,8 @@ public class ProductService implements ProductServiceInterface {
         if (productToUpdate == null) {
             return ResponseEntity.badRequest().body("Producto no encontrado");
         }
-        System.out.println("Antes: ");
 
         Optional <CategoryEntity> findCategory=  categoryServiceInterface.findCategoryONull(product.getCategoryId().getId());
-        System.out.println("Categorias: ");
-        System.out.println(findCategory);
         if(findCategory.isEmpty()){
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria no encontrada");
         }

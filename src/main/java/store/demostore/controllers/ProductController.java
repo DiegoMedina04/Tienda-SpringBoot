@@ -1,6 +1,5 @@
 package store.demostore.controllers;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,27 +18,27 @@ public class ProductController {
     private ProductServiceInterface productServiceInterface;
 
     @GetMapping
-     private List<ProductEntity> findAll (){
+    private List<ProductEntity> findAll() {
         return productServiceInterface.findAll();
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<?> findById (@PathVariable String id ){
+    private ResponseEntity<?> findById(@PathVariable String id) {
         return productServiceInterface.findById(id);
     }
 
     @PostMapping
-    private ResponseEntity<?> save (@RequestBody ProductEntity product){
+    private ResponseEntity<?> save(@RequestBody ProductEntity product) {
         return productServiceInterface.save(product);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> update (@PathVariable String id, @RequestBody ProductEntity product){
+    private ResponseEntity<?> update(@PathVariable String id, @RequestBody ProductEntity product) {
         return productServiceInterface.update(id, product);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<?> remove (@PathVariable String id){
+    private ResponseEntity<?> remove(@PathVariable String id) {
         return productServiceInterface.delete(id);
     }
 }

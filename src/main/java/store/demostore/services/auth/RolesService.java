@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.auth.RolesServiceInterface;
 import store.demostore.models.entities.auth.RolesEntity;
-import store.demostore.models.entities.auth.UserEntity;
 import store.demostore.repositories.auth.RolesRepository;
 
 @Service

@@ -27,7 +27,7 @@ public class UserEntity {
 
     private String email;
     private String password;
-    private boolean isActive;
+    private boolean active;
 
     @ManyToMany
     @JoinTable(name = "users_companies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
@@ -88,14 +88,6 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
     public List<CompanyEntity> getCompanys() {
         return companys;
     }
@@ -110,6 +102,14 @@ public class UserEntity {
 
     public void setRoles(List<RolesEntity> roles) {
         this.roles = roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }

@@ -1,11 +1,16 @@
 package store.demostore.services.auth;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import store.demostore.interfaces.CompanyServiceInterface;
+import store.demostore.interfaces.auth.RolesServiceInterface;
 import store.demostore.interfaces.auth.UserServiceInterfaz;
 import store.demostore.models.entities.auth.UserEntity;
 import store.demostore.repositories.auth.UserRepository;
@@ -15,6 +20,12 @@ public class UserService implements UserServiceInterfaz {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CompanyServiceInterface companyServiceInterface;
+
+    @Autowired
+    private RolesServiceInterface rolesServiceInterface;
 
     @Override
     public List<UserEntity> findAll() {
@@ -30,28 +41,49 @@ public class UserService implements UserServiceInterfaz {
 
     @Override
     public ResponseEntity<?> save(UserEntity user) {
+        try {
 
-        UserEntity savedUser = userRepository.save(user);
-        return ResponseEntity.ok().body(savedUser);
+            ResponseEntity<?> findRol = roleValidate(user);
+            ResponseEntity<?> findCompany = companyValidate(user);
+            if (findRol != null || findCompany != null) {
+                return findRol != null ? findRol : findCompany;
+            }
+            return ResponseEntity.ok().body(userRepository.save(user));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity<?> update(String id, UserEntity user) {
-        return userRepository.findById(id)
-                .map(record -> {
+        try {
 
-                    record.setName(user.getName());
-                    record.setLastName(user.getLastName());
-                    record.setPhone(user.getPhone());
-                    record.setEmail(user.getEmail());
-                    record.setPassword(user.getPassword());
-                    record.setActive(user.isActive());
-                    record.setRoles(user.getRoles());
-                    record.setCompanys(user.getCompanys());
+            Optional<UserEntity> userOptional = userRepository.findById(id);
+            if (userOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+            }
 
-                    UserEntity updatedUser = userRepository.save(record);
-                    return ResponseEntity.ok().body(updatedUser);
-                }).orElse(ResponseEntity.notFound().build());
+            ResponseEntity<?> findRol = roleValidate(user);
+            ResponseEntity<?> findCompany = companyValidate(user);
+            if (findRol != null || findCompany != null) {
+                return findRol == null ? findRol : findCompany;
+            }
+
+            UserEntity userToUpdate = userOptional.orElseThrow();
+            userToUpdate.setName(user.getName());
+            userToUpdate.setLastName(user.getLastName());
+            userToUpdate.setPhone(user.getPhone());
+            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setPassword(user.getPassword());
+            userToUpdate.setActive(user.isActive());
+            userToUpdate.setRoles(user.getRoles());
+            userToUpdate.setCompanys(user.getCompanys());
+
+            return ResponseEntity.ok().body(userRepository.save(userToUpdate));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 
     @Override
@@ -61,5 +93,26 @@ public class UserService implements UserServiceInterfaz {
                     userRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
+    }
+
+    private ResponseEntity<?> roleValidate(UserEntity user) {
+        boolean rolNotFound = user.getRoles().stream().anyMatch(
+                role -> rolesServiceInterface.findById(role.getId()).getStatusCode() == HttpStatus.BAD_REQUEST);
+
+        if (rolNotFound) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rol no encontrado");
+        }
+        return null;
+    }
+
+    private ResponseEntity<?> companyValidate(UserEntity user) {
+
+        boolean companyNotFound = user.getCompanys().stream()
+                .anyMatch(company -> companyServiceInterface.findById(company.getId())
+                        .getStatusCode() == HttpStatus.NOT_FOUND);
+        if (companyNotFound) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Compañia no encontrada");
+        }
+        return null;
     }
 }

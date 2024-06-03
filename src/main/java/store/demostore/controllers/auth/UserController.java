@@ -36,7 +36,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody UserEntity user) {
-
         return userServiceInterfaz.save(user);
     }
 

@@ -2,14 +2,12 @@
 package store.demostore.models.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -23,27 +21,27 @@ public class CompanyEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String name;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String nit;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private int cellphone;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String address;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String imageUrl;
 
-    private Timestamp createdAt;
+    private String createdAt;
 
-    private Timestamp updatedAt;
+    private String updatedAt;
 
     public String getId() {
         return id;
@@ -101,19 +99,19 @@ public class CompanyEntity implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public Timestamp getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 

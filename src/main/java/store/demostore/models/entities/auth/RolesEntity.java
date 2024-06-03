@@ -1,4 +1,4 @@
-package store.demostore.models.entities;
+package store.demostore.models.entities.auth;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

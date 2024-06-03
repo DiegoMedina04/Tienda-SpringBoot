@@ -1,10 +1,10 @@
-package store.demostore.interfaces;
+package store.demostore.interfaces.auth;
 
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import store.demostore.models.entities.RolesEntity;
+import store.demostore.models.entities.auth.RolesEntity;
 
 public interface RolesServiceInterface {
     List<RolesEntity> findAll();

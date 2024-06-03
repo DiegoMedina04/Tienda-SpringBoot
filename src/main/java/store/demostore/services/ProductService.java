@@ -12,7 +12,6 @@ import store.demostore.interfaces.CategoryServiceInterface;
 import store.demostore.interfaces.ProductServiceInterface;
 import store.demostore.models.entities.CategoryEntity;
 import store.demostore.models.entities.ProductEntity;
-import store.demostore.repositories.CategoryRepository;
 import store.demostore.repositories.ProductRepository;
 
 @Service
@@ -51,8 +50,9 @@ public class ProductService implements ProductServiceInterface {
             return ResponseEntity.badRequest().body("Producto no encontrado");
         }
 
-        Optional <CategoryEntity> findCategory=  categoryServiceInterface.findCategoryONull(product.getCategoryId().getId());
-        if(findCategory.isEmpty()){
+        Optional<CategoryEntity> findCategory = categoryServiceInterface
+                .findCategoryONull(product.getCategoryId().getId());
+        if (findCategory.isEmpty()) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria no encontrada");
         }
 
@@ -79,8 +79,5 @@ public class ProductService implements ProductServiceInterface {
         productRepository.delete(product);
         return ResponseEntity.ok().body("Product deleted");
     }
-
-
-
 
 }

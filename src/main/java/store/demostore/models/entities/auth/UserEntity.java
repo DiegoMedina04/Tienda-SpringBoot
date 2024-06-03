@@ -1,5 +1,6 @@
 package store.demostore.models.entities.auth;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -15,7 +16,7 @@ import store.demostore.models.entities.CompanyEntity;
 
 @Entity
 @Table(name = "usuarios")
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,6 +29,10 @@ public class UserEntity {
     private String email;
     private String password;
     private boolean active;
+
+    private String address;
+
+    private String birthdayDate;
 
     @ManyToMany
     @JoinTable(name = "users_companies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
@@ -110,6 +115,22 @@ public class UserEntity {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(String birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
 }

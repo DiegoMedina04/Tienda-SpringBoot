@@ -1,13 +1,20 @@
 package store.demostore.models.entities;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import store.demostore.models.entities.auth.UserEntity;
 
 @Entity
 @Table(name = "empleados")
@@ -17,24 +24,20 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(unique = true)
+    // @Column(unique = true)
     private String code;
 
-    private String name;
-
-    private String lastName;
-
-    private int cellphone;
-
-    private String email;
-    private String address;
-    private Timestamp birthdayDate;
+    @OneToOne
+    private UserEntity userId;
 
     private Long salary;
 
     private Boolean isActive;
 
-    private CompanyEntity empresaId;
+    @ManyToMany
+    @JoinTable(name = "employees_positions", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "position_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+            "employee_id", "position_id" }))
+    private List<PositionEntity> position;
 
     public String getId() {
         return id;
@@ -42,62 +45,6 @@ public class EmployeeEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getcode() {
-        return code;
-    }
-
-    public void setcode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(int cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Timestamp getBirthdayDate() {
-        return birthdayDate;
-    }
-
-    public void setBirthdayDate(Timestamp birthdayDate) {
-        this.birthdayDate = birthdayDate;
     }
 
     public Long getSalary() {
@@ -116,12 +63,28 @@ public class EmployeeEntity {
         this.isActive = isActive;
     }
 
-    public CompanyEntity getEmpresaId() {
-        return empresaId;
+    public String getCode() {
+        return code;
     }
 
-    public void setEmpresaId(CompanyEntity empresaId) {
-        this.empresaId = empresaId;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public UserEntity getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UserEntity userId) {
+        this.userId = userId;
+    }
+
+    public List<PositionEntity> getPosition() {
+        return position;
+    }
+
+    public void setPosition(List<PositionEntity> position) {
+        this.position = position;
     }
 
 }

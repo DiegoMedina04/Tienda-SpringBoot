@@ -78,6 +78,8 @@ public class UserService implements UserServiceInterfaz {
             userToUpdate.setActive(user.isActive());
             userToUpdate.setRoles(user.getRoles());
             userToUpdate.setCompanys(user.getCompanys());
+            userToUpdate.setAddress(user.getAddress());
+            userToUpdate.setBirthdayDate(user.getBirthdayDate());
 
             return ResponseEntity.ok().body(userRepository.save(userToUpdate));
         } catch (Exception e) {

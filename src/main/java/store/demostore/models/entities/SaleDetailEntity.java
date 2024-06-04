@@ -12,8 +12,11 @@ public  class SaleDetailEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+
+    @OneToOne
     private ProductEntity product;
 
+    @OneToOne
     private SaleEntity sale;
 
     private int quantity;

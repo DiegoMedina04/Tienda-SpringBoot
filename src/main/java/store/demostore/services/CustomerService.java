@@ -55,6 +55,7 @@ public class CustomerService implements CustomerServiceInterface {
         }
 
         ResponseEntity<?> validateUser = validateUser(customer);
+
         if (validateUser != null) {
             return validateUser;
         }

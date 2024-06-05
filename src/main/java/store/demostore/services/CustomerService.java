@@ -55,8 +55,8 @@ public class CustomerService implements CustomerServiceInterface {
         }
 
         ResponseEntity<?> validateUser = validateUser(customer);
-
-        if (validateUser != null) {
+        // creando pull request
+        if (validateUser != null || validateUser != null) {
             return validateUser;
         }
         CustomerEntity customerToUpdate = customerOptional.orElseThrow();

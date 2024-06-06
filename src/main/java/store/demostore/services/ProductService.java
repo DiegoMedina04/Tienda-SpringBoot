@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import store.demostore.interfaces.CategoryServiceInterface;
 import store.demostore.interfaces.ProductServiceInterface;
 import store.demostore.models.entities.CategoryEntity;
@@ -50,10 +53,13 @@ public class ProductService implements ProductServiceInterface {
             return ResponseEntity.badRequest().body("Producto no encontrado");
         }
 
-        Optional<CategoryEntity> findCategory = categoryServiceInterface
-                .findCategoryONull(product.getCategoryId().getId());
-        if (findCategory.isEmpty()) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria no encontrada");
+        if (product.getCategoryId() != null) {
+            Optional<CategoryEntity> findCategory = categoryServiceInterface
+                    .findCategoryONull(product.getCategoryId().getId());
+            if (findCategory.isEmpty()) {
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria no encontrada");
+            }
+
         }
 
         productToUpdate.setCode(product.getCode());

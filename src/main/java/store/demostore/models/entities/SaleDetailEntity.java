@@ -6,17 +6,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "sale_details")
-public  class SaleDetailEntity {
+public class SaleDetailEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-
-    @OneToOne
+    @ManyToOne
     private ProductEntity product;
 
-    @OneToOne
+    @ManyToOne
     private SaleEntity sale;
 
     private int quantity;

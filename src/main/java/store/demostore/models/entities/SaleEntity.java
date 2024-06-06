@@ -12,10 +12,10 @@ public class SaleEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
+    @ManyToOne
     private EmployeeEntity employe;
 
-    @OneToOne
+    @ManyToOne
     private CustomerEntity customer;
 
     private Long total;
@@ -26,7 +26,8 @@ public class SaleEntity {
 
     private String date;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<SaleDetailEntity> detail;
 
     public String getId() {

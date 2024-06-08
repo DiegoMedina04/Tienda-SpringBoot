@@ -2,8 +2,6 @@ package store.demostore.models.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "sale_details")
 public class SaleDetailEntity {
@@ -16,6 +14,7 @@ public class SaleDetailEntity {
     private ProductEntity product;
 
     @ManyToOne
+
     private SaleEntity sale;
 
     private int quantity;

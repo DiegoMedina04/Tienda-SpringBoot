@@ -1,20 +1,19 @@
 package store.demostore.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import store.demostore.interfaces.ProductServiceInterface;
+import store.demostore.models.dto.SaleDetailDto;
+import store.demostore.models.dto.SaleDto;
 import store.demostore.models.entities.ProductEntity;
 import store.demostore.models.entities.SaleDetailEntity;
 import store.demostore.models.entities.SaleEntity;
-import store.demostore.repositories.SaleDetailRepository;
 import store.demostore.repositories.SaleRepository;
 
 @Service
@@ -26,15 +25,12 @@ public class SaleService {
     @Autowired
     private ProductServiceInterface productServiceInterface;
 
-    @Autowired
-    private SaleDetailRepository saleDetailRepository;
-
-    public List<SaleEntity> findAll() {
-        return (List<SaleEntity>) saleRepository.findAll();
+    public List<SaleDto> findAll() {
+        List<SaleEntity> sales = (List<SaleEntity>) saleRepository.findAll();
+        return sales.stream().map(this::mapperSaleToDto).collect(Collectors.toList());
     }
 
     public ResponseEntity<?> save(SaleEntity sale) {
-        // try {
 
         ResponseEntity<?> responseValidate = validateProducts(sale.getDetail());
         if (responseValidate != null) {
@@ -49,14 +45,7 @@ public class SaleService {
 
         SaleEntity response = saleRepository.save(sale);
 
-        // saleDetailRepository.saveAll(detailsSave);
-
         return ResponseEntity.ok(response);
-        // } catch (Exception e) {
-        // return
-        // ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        // }
-
     }
 
     private ResponseEntity<?> validateProducts(List<SaleDetailEntity> saleDetails) {
@@ -71,20 +60,6 @@ public class SaleService {
             return response;
         }
         return null;
-
-        /*
-         * List<Boolean> findProducts= saleDetails.stream().map(product -> {
-         * ResponseEntity<?> response =
-         * productServiceInterface.findById(product.getProduct().getId());
-         * if(response.getStatusCode() != HttpStatus.BAD_REQUEST){
-         * product.setProduct((ProductEntity) response.getBody());
-         * return null;
-         * }
-         * return false;
-         * }).collect(Collectors.toList());;
-         * 
-         */
-
     }
 
     private long calculateTotal(SaleEntity sale) {
@@ -93,12 +68,30 @@ public class SaleService {
                 .sum();
     }
 
-    private List<SaleDetailEntity> mapper(SaleEntity sale) {
+    private SaleDto mapperSaleToDto(SaleEntity sale) {
 
-        for (int i = 0; i < sale.getDetail().size(); i++) {
-            sale.getDetail().get(i).setSale(sale);
-        }
-        return sale.getDetail();
+        SaleDto saleDto = new SaleDto();
+        saleDto.setId(sale.getId());
+        saleDto.setEmploye(sale.getEmploye().getUserId().getName());
+        saleDto.setCustomer(sale.getCustomer().getUserId().getName());
+        saleDto.setTotal(sale.getTotal());
+        saleDto.setObservations(sale.getObservations());
+        saleDto.setCode(sale.getCode());
+        saleDto.setDate(sale.getDate());
+
+        List<SaleDetailDto> detailDto = sale.getDetail().stream().map(detail -> {
+            SaleDetailDto saleDetailDto = new SaleDetailDto();
+            saleDetailDto.setId(detail.getId());
+            saleDetailDto.setProduct(detail.getProduct().getName());
+            saleDetailDto.setSale(detail.getSale().getId());
+            saleDetailDto.setQuantity(detail.getQuantity());
+            return saleDetailDto;
+        }).collect(Collectors.toList());
+
+        saleDto.setDetail(detailDto);
+
+        return saleDto;
+
     }
 
     public ResponseEntity<?> remove(String uuid) {

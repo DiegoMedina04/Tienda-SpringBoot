@@ -8,16 +8,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-
-@Table(name = "categorias")
+@Getter
+@Setter
+@Table(name = "categories")
 public class CategoryEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -25,36 +30,8 @@ public class CategoryEntity implements Serializable {
 
     private Boolean isActive;
 
-    public String getId() {
-        return id;
-    }
+    private String createdAt;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
+    private String updatedAt;
 
 }

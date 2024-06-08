@@ -8,101 +8,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "productos")
+@Getter
+@Setter
+@Table(name = "products")
 public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NotBlank
     @Column(unique = true)
     private String code;
 
+    @NotBlank
     private String name;
 
     private String description;
 
+    @NotBlank
     private Long price;
 
+    @NotBlank
     private Long stock;
-    private Timestamp dateExpiry;
+
+    @NotBlank
+    private String dateExpiry;
 
     private String imageUrl;
 
+    @NotBlank
     private CategoryEntity categoryId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Long getStock() {
-        return stock;
-    }
-
-    public void setStock(Long stock) {
-        this.stock = stock;
-    }
-
-    public Timestamp getDateExpiry() {
-        return dateExpiry;
-    }
-
-    public void setDateExpiry(Timestamp dateExpiry) {
-        this.dateExpiry = dateExpiry;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public CategoryEntity getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(CategoryEntity categoryId) {
-        this.categoryId = categoryId;
-    }
 
 }

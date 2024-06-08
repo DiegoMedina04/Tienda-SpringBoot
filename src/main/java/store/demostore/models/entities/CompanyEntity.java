@@ -9,110 +9,49 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * CompanyEntity
  */
 @Entity
-@Table(name = "empresas")
+@Setter
+@Getter
+@Table(name = "companies")
 public class CompanyEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String name;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String nit;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private int cellphone;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String email;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String address;
 
-    // @Column(unique = true)
+    @NotBlank
+    @Column(unique = true)
     private String imageUrl;
 
     private String createdAt;
 
     private String updatedAt;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNit() {
-        return nit;
-    }
-
-    public void setNit(String nit) {
-        this.nit = nit;
-    }
-
-    public int getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(int cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
 }

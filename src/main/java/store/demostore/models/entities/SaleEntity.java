@@ -1,10 +1,15 @@
 package store.demostore.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "sales")
 public class SaleEntity {
 
@@ -12,9 +17,11 @@ public class SaleEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NotBlank
     @ManyToOne
     private EmployeeEntity employe;
 
+    @NotBlank
     @ManyToOne
     private CustomerEntity customer;
 
@@ -22,75 +29,12 @@ public class SaleEntity {
 
     private String observations;
 
+    @NotBlank
     private String code;
 
     private String date;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
-
     private List<SaleDetailEntity> detail;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public EmployeeEntity getEmploye() {
-        return employe;
-    }
-
-    public void setEmploye(EmployeeEntity employe) {
-        this.employe = employe;
-    }
-
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
-
-    public String getObservations() {
-        return observations;
-    }
-
-    public void setObservations(String observations) {
-        this.observations = observations;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public List<SaleDetailEntity> getDetail() {
-        return detail;
-    }
-
-    public void setDetail(List<SaleDetailEntity> detail) {
-        this.detail = detail;
-    }
 }

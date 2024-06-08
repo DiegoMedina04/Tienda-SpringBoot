@@ -3,7 +3,8 @@ package store.demostore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import store.demostore.models.entities.CategoryEntity;
+
+import store.demostore.models.dto.SaleDto;
 import store.demostore.models.entities.SaleEntity;
 import store.demostore.services.SaleService;
 import store.demostore.utils.Constants;
@@ -17,20 +18,18 @@ public class SaleController {
     @Autowired
     private SaleService saleService;
 
-
-
     @GetMapping
-    public List<SaleEntity> findAll() {
+    public List<SaleDto> findAll() {
         return saleService.findAll();
     }
 
-     /*
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
-        return saleService.findById(id);
-    }
-
+    /*
+     * 
+     * @GetMapping("/{id}")
+     * public ResponseEntity<?> findById(@PathVariable String id) {
+     * return saleService.findById(id);
+     * }
+     * 
      */
 
     @PostMapping

@@ -40,18 +40,18 @@ public class EmployeeService implements EmployeeServiceInterface {
 
     @Override
     public ResponseEntity<?> save(EmployeeEntity employee) {
-        // try {
-        // ResponseEntity<?> findUser = validateUser(employee);
-        // ResponseEntity<?> findPosition = validatePosition(employee);
+        try {
+            ResponseEntity<?> findUser = validateUser(employee);
+            ResponseEntity<?> findPosition = validatePosition(employee);
 
-        // if (findUser != null || findPosition != null) {
-        // return findUser != null ? findUser : findPosition;
-        // }
-        // return ResponseEntity.ok().body(employee);
-        return ResponseEntity.ok().body(employeeRepository.save(employee));
-        // } catch (Exception e) {
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        // }
+            if (findUser != null || findPosition != null) {
+                return findUser != null ? findUser : findPosition;
+            }
+            employee.setIsActive(true);
+            return ResponseEntity.ok().body(employeeRepository.save(employee));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @Override

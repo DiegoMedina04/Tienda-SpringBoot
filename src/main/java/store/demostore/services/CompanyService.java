@@ -1,5 +1,6 @@
 package store.demostore.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public ResponseEntity<?> save(CompanyEntity company) {
-        CompanyEntity savedCompany = companyRepository.save(company);
-        return ResponseEntity.ok().body(savedCompany);
+
+        company.setCreatedAt(new Date().toString());
+        return ResponseEntity.ok().body(companyRepository.save(company));
     }
 
     @Override
@@ -40,8 +42,8 @@ public class CompanyService implements CompanyServiceInterface {
                 .map(record -> {
                     record.setName(company.getName());
                     record.setAddress(company.getAddress());
-                    CompanyEntity updatedCompany = companyRepository.save(record);
-                    return ResponseEntity.ok().body(updatedCompany);
+                    company.setUpdatedAt(new Date().toString());
+                    return ResponseEntity.ok().body(companyRepository.save(record));
                 }).orElse(ResponseEntity.notFound().build());
     }
 

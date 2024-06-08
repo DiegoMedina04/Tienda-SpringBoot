@@ -1,5 +1,6 @@
 package store.demostore.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,8 @@ public class CategoryService implements CategoryServiceInterface {
         if (nameCategory.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Categoria con nombre existente");
         }
+        category.setIsActive(true);
+        category.setUpdatedAt(new Date().toString());
         return ResponseEntity.ok(categoryRepository.save(category));
     }
 
@@ -57,7 +60,7 @@ public class CategoryService implements CategoryServiceInterface {
         CategoryEntity categoryDb = categoryOptional.orElseThrow();
         categoryDb.setName(category.getName());
         categoryDb.setDescription(category.getDescription());
-        categoryDb.setIsActive(category.getIsActive());
+        categoryDb.setUpdatedAt(new Date().toString());
 
         return ResponseEntity.ok(categoryRepository.save(categoryDb));
     }
@@ -77,7 +80,7 @@ public class CategoryService implements CategoryServiceInterface {
         return categoryRepository.findByNameAndDifferentId(name, id);
     }
 
-    public Optional<CategoryEntity> findCategoryONull (String id){
+    public Optional<CategoryEntity> findCategoryONull(String id) {
 
         return categoryRepository.findById(id);
     }

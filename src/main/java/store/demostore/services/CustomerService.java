@@ -5,14 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import store.demostore.interfaces.CustomerServiceInterface;
 import store.demostore.interfaces.auth.UserServiceInterfaz;
 import store.demostore.models.entities.CustomerEntity;
-import store.demostore.models.entities.auth.UserEntity;
 import store.demostore.repositories.CustomerRepository;
 
 @Service

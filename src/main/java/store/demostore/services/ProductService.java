@@ -39,8 +39,12 @@ public class ProductService implements ProductServiceInterface {
 
     @Override
     public ResponseEntity<?> save(ProductEntity product) {
-        ProductEntity newProduct = productRepository.save(product);
-        return ResponseEntity.ok().body(newProduct);
+        try {
+            ProductEntity newProduct = productRepository.save(product);
+            return ResponseEntity.ok().body(newProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @Override

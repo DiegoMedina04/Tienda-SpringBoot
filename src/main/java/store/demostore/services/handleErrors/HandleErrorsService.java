@@ -3,8 +3,10 @@ package store.demostore.services.handleErrors;
 import java.util.HashMap;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+@Service
 public class HandleErrorsService {
 
     public ResponseEntity<?> vaidateErrors(BindingResult bindingResult) {

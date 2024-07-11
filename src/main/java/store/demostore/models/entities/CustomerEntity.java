@@ -1,5 +1,6 @@
 package store.demostore.models.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,8 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
-    @NotBlank
+    @OneToOne(cascade = CascadeType.PERSIST)
+    // @NotBlank
     private UserEntity userId;
 
     private Boolean isActive;

@@ -37,11 +37,15 @@ public class CustomerService implements CustomerServiceInterface {
     @Override
     public ResponseEntity<?> save(CustomerEntity customer) {
 
-        ResponseEntity<?> validateUser = validateUser(customer);
-        if (validateUser != null) {
-            return validateUser;
+        try {
+            ResponseEntity<?> validateUser = validateUser(customer);
+            if (validateUser != null) {
+                return validateUser;
+            }
+            return ResponseEntity.ok().body(customerRepository.save(customer));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e);
         }
-        return ResponseEntity.ok().body(customerRepository.save(customer));
     }
 
     @Override
@@ -74,6 +78,9 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     private ResponseEntity<?> validateUser(CustomerEntity customer) {
+        if (customer.getUserId().getId().isEmpty())
+            return null;
+
         ResponseEntity<?> userOptional = userService.findById(customer.getUserId().getId());
         if (userOptional.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.badRequest().body("Usuario no encontrado");

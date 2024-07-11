@@ -35,6 +35,7 @@ public class RolesService implements RolesServiceInterface {
 
     @Override
     public ResponseEntity<?> save(RolesEntity rol) {
+        rol.setName("ROLE_" + rol.getName().toUpperCase());
         return ResponseEntity.ok(rolesRepository.save(rol));
     }
 
@@ -43,8 +44,7 @@ public class RolesService implements RolesServiceInterface {
 
         return rolesRepository.findById(id)
                 .map(roleDb -> {
-
-                    roleDb.setName(rol.getName());
+                    rol.setName("ROLE_" + rol.getName().toUpperCase());
                     roleDb.setDescription(rol.getDescription());
 
                     RolesEntity rolUpdate = rolesRepository.save(roleDb);

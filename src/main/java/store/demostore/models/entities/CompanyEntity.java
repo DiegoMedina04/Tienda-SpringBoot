@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,7 +35,7 @@ public class CompanyEntity implements Serializable {
     @Column(unique = true)
     private String nit;
 
-    @NotBlank
+    @NotNull
     @Column(unique = true)
     private int cellphone;
 

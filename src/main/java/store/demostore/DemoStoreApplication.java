@@ -10,5 +10,9 @@ public class DemoStoreApplication {
 		SpringApplication.run(DemoStoreApplication.class, args);
 		System.out.println("Cargado y listo ");
 	}
-
+	// <dependency>
+	// <groupId>com.mysql</groupId>
+	// <artifactId>mysql-connector-j</artifactId>
+	// <scope>runtime</scope>
+	// </dependency>
 }

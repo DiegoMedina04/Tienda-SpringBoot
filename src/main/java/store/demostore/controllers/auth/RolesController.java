@@ -16,6 +16,7 @@ import store.demostore.models.entities.auth.RolesEntity;
 import store.demostore.utils.Constants;
 
 @RestController
+@CrosoOrigin(origins = "*")
 @RequestMapping(Constants.BASE_URL + "/rol")
 public class RolesController {
 

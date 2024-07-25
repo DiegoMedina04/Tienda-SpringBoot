@@ -32,9 +32,9 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     public ResponseEntity<?> save(CompanyEntity company) {
         try {
-            
-        company.setCreatedAt(new Date().toString());
-        return ResponseEntity.ok().body(companyRepository.save(company));
+
+            company.setCreatedAt(new Date().toString());
+            return ResponseEntity.ok().body(companyRepository.save(company));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -45,7 +45,11 @@ public class CompanyService implements CompanyServiceInterface {
         return companyRepository.findById(id)
                 .map(record -> {
                     record.setName(company.getName());
+                    record.setNit(company.getNit());
+                    record.setCellphone(company.getCellphone());
+                    record.setEmail(company.getEmail());
                     record.setAddress(company.getAddress());
+                    record.setImageUrl(company.getImageUrl());
                     company.setUpdatedAt(new Date().toString());
                     return ResponseEntity.ok().body(companyRepository.save(record));
                 }).orElse(ResponseEntity.notFound().build());

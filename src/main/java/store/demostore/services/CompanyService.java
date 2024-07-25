@@ -31,9 +31,13 @@ public class CompanyService implements CompanyServiceInterface {
 
     @Override
     public ResponseEntity<?> save(CompanyEntity company) {
-
+        try {
+            
         company.setCreatedAt(new Date().toString());
         return ResponseEntity.ok().body(companyRepository.save(company));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @Override

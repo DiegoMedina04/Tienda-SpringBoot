@@ -48,12 +48,12 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerEntity customer, BindingResult bindingResult) {
-        // customer.setUserId() ;
+
         if (bindingResult.hasErrors()) {
             return handleErrorsService.vaidateErrors(bindingResult);
 
         }
-        customer.setIsActive(true);
+    
         return customerService.save(customer);
     }
 

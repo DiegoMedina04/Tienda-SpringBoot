@@ -39,12 +39,20 @@ public class CustomerService implements CustomerServiceInterface {
 
         try {
             ResponseEntity<?> validateUser = validateUser(customer);
+            ResponseEntity<?> userOptional = userService.save(customer.getUserId());
+            
             if (validateUser != null) {
                 return validateUser;
             }
+    
+            if (userOptional.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                return userOptional;
+            }
+    
+            customer.setIsActive(true);
             return ResponseEntity.ok().body(customerRepository.save(customer));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -78,8 +86,9 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     private ResponseEntity<?> validateUser(CustomerEntity customer) {
-        if (customer.getUserId().getId().isEmpty())
+        if (customer.getUserId() == null || customer.getUserId().getId() == null || customer.getUserId().getId().isEmpty()) {
             return null;
+        }
 
         ResponseEntity<?> userOptional = userService.findById(customer.getUserId().getId());
         if (userOptional.getStatusCode() == HttpStatus.NOT_FOUND) {

@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import store.demostore.models.entities.auth.UserEntity;
@@ -26,7 +25,7 @@ public class CustomerEntity {
     // @NotBlank
     private UserEntity userId;
 
-    @NotBlank
+    
     private Boolean isActive;
 
 }

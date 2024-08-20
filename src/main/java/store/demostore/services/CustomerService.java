@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import store.demostore.interfaces.CustomerServiceInterface;
 import store.demostore.interfaces.auth.UserServiceInterfaz;
 import store.demostore.models.entities.CustomerEntity;
@@ -45,10 +47,9 @@ public class CustomerService implements CustomerServiceInterface {
                 return validateUser;
             }
     
-            if (userOptional.getStatusCode() == HttpStatus.BAD_REQUEST) {
+            if (userOptional.getStatusCode() != HttpStatus.OK) {
                 return userOptional;
             }
-    
             customer.setIsActive(true);
             return ResponseEntity.ok().body(customerRepository.save(customer));
         } catch (Exception e) {

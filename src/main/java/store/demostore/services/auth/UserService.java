@@ -41,12 +41,17 @@ public class UserService implements UserServiceInterfaz {
     @Override
     public ResponseEntity<?> save(UserEntity user) {
         try {
-
             ResponseEntity<?> findRol = roleValidate(user);
             ResponseEntity<?> findCompany = companyValidate(user);
             if (findRol != null || findCompany != null) {
                 return findRol != null ? findRol : findCompany;
             }
+            Optional<UserEntity> findUser = findUserByEmail(user.getEmail());
+            if (findUser.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario ya registrado");
+            }
+            System.out.println("--------------------------------------------------");
+            System.out.println("paso a crear el usuario");
             return ResponseEntity.ok().body(userRepository.save(user));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -116,4 +121,15 @@ public class UserService implements UserServiceInterfaz {
         }
         return null;
     }
+
+    private Optional<UserEntity> findUserByEmail(String email) {
+        return userRepository.findFirstByEmail(email);
+        
+    }
+
+
 }
+
+// return userRepository.findByEmail(email).isEmpty() ? 
+//         ResponseEntity.notFound().build()
+//         : ResponseEntity.ok().body("Usuario ya registrado");
